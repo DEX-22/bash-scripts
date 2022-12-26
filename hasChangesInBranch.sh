@@ -2,24 +2,33 @@
 
 dato='git pull'
 
-currentBranch=$(git branch --show-current)
+currentBranch="$(git branch --show-current)"
 
-hasChanges=$(git switch $1 | grep -o 'git pull')
-
-cambios="${hasChanges}"
-
-git switch "$currentBranch"
 
 	if
-		[ "$cambios" == "$dato" ] 
+		[ "$currentBranch" != $1 ]
 	then
-		zenity --info --text='new cambios'
+
+		hasChanges=$(git switch $1 | grep -o 'git pull')
+
+		cambios="${hasChanges}"
+
+		git switch "$currentBranch"
 	else
-		zenity --info --text="no hay cambios"
+
+		hasChanges=$(git status | grep -o 'git pull')
+
+		cambios="${hasChanges}"
+
 	fi
 
-#git switch "$currentBranch"
-
+	if
+		[ "$cambios" == "$dato" ]
+	then
+		zenity --notification --text="Nuevos cambios en $1"
+	else
+		zenity --notification --text="No hay cambios en $1"
+	fi
 
 
 
