@@ -13,9 +13,9 @@ git switch "$currentBranch"
 	if
 		[ "$cambios" == "$dato" ] 
 	then
-		echo 'new cambios'
+		zenity --info --text='new cambios'
 	else
-		echo "no hay cambios"
+		zenity --info --text="no hay cambios"
 	fi
 
 #git switch "$currentBranch"
